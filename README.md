@@ -1,4 +1,5 @@
 # Hyperledger Aries Cloud Agent - Python  <!-- omit in toc -->
+## Clone de repositório para estudo
 
 [![pypi releases](https://img.shields.io/pypi/v/aries_cloudagent)](https://pypi.org/project/aries-cloudagent/)
 [![CircleCI](https://circleci.com/gh/hyperledger/aries-cloudagent-python.svg?style=shield)](https://circleci.com/gh/hyperledger/aries-cloudagent-python)
@@ -10,94 +11,93 @@
 
 ## Overview
 
-Hyperledger Aries Cloud Agent Python (ACA-Py) is a foundation for building Verifiable Credential (VC) ecosystems. It operates in the second and third layers of the [Trust Over IP framework (PDF)](https://trustoverip.org/wp-content/uploads/sites/98/2020/05/toip_050520_primer.pdf) using [DIDComm messaging](https://github.com/hyperledger/aries-rfcs/tree/main/concepts/0005-didcomm) and [Hyperledger Aries](https://www.hyperledger.org/use/aries) protocols. The "cloud" in the name means that ACA-Py runs on servers (cloud, enterprise, IoT devices, and so forth), and is not designed to run on mobile devices.
+Hyperledger Aries Cloud Agent Python (ACA-Py) é uma base para a construção de ecossistemas de credenciais verificáveis. Ele opera na segunda e terceira camadas da [estrutura Trust Over IP (PDF)](https://trustoverip.org/wp-content/uploads/sites/98/2020/05/toip_050520_primer.pdf) usando [mensagens DIDComm ](https://github.com/hyperledger/aries-rfcs/tree/main/concepts/0005-didcomm) e protocolos [Hyperledger Aries](https://www.hyperledger.org/use/aries). A "nuvem" no nome significa que o ACA-Py é executado em servidores (nuvem, empresa, dispositivos IoT e assim por diante) e não foi projetado para ser executado em dispositivos móveis.
 
-ACA-Py is built on the Aries concepts and features that make up [Aries Interop Profile (AIP) 1.0](https://github.com/hyperledger/aries-rfcs/tree/main/concepts/0302-aries-interop-profile#aries-interop-profile-version-10), and most of the features in [AIP 2.0](https://github.com/hyperledger/aries-rfcs/tree/main/concepts/0302-aries-interop-profile#aries-interop-profile-version-20). [ACA-Py’s supported Aries protocols](https://github.com/hyperledger/aries-cloudagent-python/blob/main/SupportedRFCs.md) include, most importantly, protocols for issuing, verifying, and holding verifiable credentials using both [Hyperledger Indy AnonCreds](https://hyperledger-indy.readthedocs.io/projects/sdk/en/latest/docs/design/002-anoncreds/README.html) verifiable credential format, and the [W3C Standard Verifiable Credential](https://www.w3.org/TR/vc-data-model/) format using JSON-LD with LD-Signatures and BBS+ Signatures.
+O ACA-Py é construído sobre os conceitos e recursos de Aries que compõem o [Aries Interop Profile (AIP) 1.0](https://github.com/hyperledger/aries-rfcs/tree/main/concepts/0302-aries-interop- profile#aries-interop-profile-version-10) e a maioria dos recursos do [AIP 2.0](https://github.com/hyperledger/aries-rfcs/tree/main/concepts/0302-aries-interop- profile#aries-interop-profile-version-20). [Protocolos Aries suportados pelo ACA-Py](https://github.com/hyperledger/aries-cloudagent-python/blob/main/SupportedRFCs.md) incluem, mais importante, protocolos para emitir, verificar e manter credenciais verificáveis usando ambos [Hyperledger Indy AnonCreds](https://hyperledger-indy.readthedocs.io/projects/sdk/en/latest/docs/design/002-anoncreds/README.html) formato de credencial verificável e a [Credencial verificável padrão W3C] (https://www.w3.org/TR/vc-data-model/) usando JSON-LD com LD-Signatures e BBS+ Signatures.
 
-To use ACA-Py you create a business logic controller that "talks to" ACA-Py (sending HTTP requests and receiving webhook notifications), and ACA-Py handles the Aries and DIDComm functionality. That controller can be built in any language that supports making and receiving HTTP requests; knowledge of Python is not needed. Together, this means you can focus on building VC solutions using familiar web development technologies, instead of having to learn the nuts and bolts of low-level cryptography and Trust over IP-type Aries protocols.
+Para usar o ACA-Py, você cria um controlador de lógica de negócios que "fala com" o ACA-Py (enviando solicitações HTTP e recebendo notificações de webhook) e o ACA-Py lida com a funcionalidade Aries e DIDComm. Esse controlador pode ser construído em qualquer linguagem que suporte fazer e receber solicitações HTTP; conhecimento de Python não é necessário. Juntos, isso significa que você pode se concentrar na criação de soluções de VC usando tecnologias familiares de desenvolvimento da Web, em vez de ter que aprender os detalhes básicos da criptografia de baixo nível e dos protocolos Aries do tipo Trust over IP.
 
-This [checklist-style overview document](./SupportedRFCs.md) provides a full list of the features in ACA-Py.
-The following is a list of some of the core features needed for a production deployment, with a link to detailed information about the capability.
+Este [documento de visão geral em estilo de lista de verificação](./SupportedRFCs.md) fornece uma lista completa dos recursos do ACA-Py.
+A seguir está uma lista de alguns dos principais recursos necessários para uma implantação de produção, com um link para informações detalhadas sobre o recurso.
 
 ### Multi-Tenant
 
-ACA-Py supports "multi-tenant" scenarios. In these scenarios, one (scalable) instance of ACA-Py uses one database instance, and are together capable of managing separate secure storage (for private keys, DIDs, credentials, etc.) for many different actors. This enables (for example) an "issuer-as-a-service", where an enterprise may have many VC issuers, each with different identifiers, using the same instance of ACA-Py to interact with VC holders as required. Likewise, an ACA-Py instance could be a "cloud wallet" for many holders (e.g. people or organizations) that, for whatever reason, cannot use a mobile device for a wallet. Learn more about multi-tenant deployments [here](./Multitenancy.md).
+O ACA-Py oferece suporte a cenários "multi-tenant". Nesses cenários, uma instância (escalável) de ACA-Py usa uma instância de banco de dados e juntos são capazes de gerenciar armazenamento seguro separado (para chaves privadas, DIDs, credenciais, etc.) para muitos atores diferentes. Isso permite (por exemplo) um "emissor como serviço", em que uma empresa pode ter muitos emissores de VC, cada um com identificadores diferentes, usando a mesma instância de ACA-Py para interagir com os detentores de VC conforme necessário. Da mesma forma, uma instância ACA-Py pode ser uma "carteira em nuvem" para muitos detentores (por exemplo, pessoas ou organizações) que, por qualquer motivo, não podem usar um dispositivo móvel como carteira. Saiba mais sobre implantações multi-tenant [aqui](./Multitenancy.md).
 
 ### Mediator Service
 
-Startup options allow the use of an ACA-Py as an Aries [mediator](https://github.com/hyperledger/aries-rfcs/tree/main/concepts/0046-mediators-and-relays#summary) using core Aries protocols to coordinate its mediation role. Such an ACA-Py instance receives, stores and forwards messages to Aries  agents that (for example) lack an addressable endpoint on the Internet such as a mobile wallet. A live instance of a public mediator based on ACA-Py is available [here](https://indicio-tech.github.io/mediator/) from Indicio Technologies. Learn more about deploying a mediator [here](./Mediation.md).
-Coming soon is a Hyperledger Aries Mediator repository that includes a fully configured mediator ready for production deployment using
-ACA-Py as a dependency.
+As opções de inicialização permitem o uso de um ACA-Py como um [mediador] de Áries (https://github.com/hyperledger/aries-rfcs/tree/main/concepts/0046-mediators-and-relays#summary) usando o núcleo de Áries protocolos para coordenar seu papel de mediação. Tal instância ACA-Py recebe, armazena e encaminha mensagens para agentes Aries que (por exemplo) não possuem um terminal endereçável na Internet, como uma carteira móvel. Uma instância ao vivo de um mediador público baseado em ACA-Py está disponível [aqui](https://indicio-tech.github.io/mediator/) da Indicio Technologies. Saiba mais sobre como implantar um mediador [aqui](./Mediation.md).
+Em breve, um repositório Hyperledger Aries Mediator que inclui um mediador totalmente configurado pronto para implantação de produção usando ACA-Py como uma dependência.
 
 ### Indy Transaction Endorsing
 
-ACA-Py supports a Transaction Endorsement protocol, for agents that don't have write access to an Indy ledger.  Endorser support is documented [here](Endorser.md).
+ACA-Py oferece suporte a um protocolo de endosso de transação, para agentes que não têm acesso de gravação a um ledger Indy. O suporte do endossante está documentado [aqui](Endorser.md).
 
 ### Scaled Deployments
 
-ACA-Py supports deployments in scaled environments such as in Kubernetes environments where ACA-Py and its storage components can be horizontally scaled as needed to handle the load.
+O ACA-Py oferece suporte a implantações em ambientes dimensionados, como em ambientes Kubernetes, onde o ACA-Py e seus componentes de armazenamento podem ser dimensionados horizontalmente conforme necessário para lidar com a carga.
 
 ## Example Uses
 
-The business logic you use with ACA-Py is limited only by your imagination. Possible applications include:
+A lógica de negócios que você usa com o ACA-Py é limitada apenas pela sua imaginação. Possíveis aplicações incluem:
 
-* An interface to a legacy system to issue verifiable credentials
-* An authentication service based on the presentation of verifiable credential proofs
-* An enterprise wallet to hold and present verifiable credentials about that enterprise
-* A user interface for a person to use a wallet not stored on a mobile device
-* An application embedded in an IoT device, capable of issuing verifiable credentials about collected data
-* A persistent connection to other agents that enables secure messaging and notifications
-* Custom code to implement a new service.
+* Uma interface para um sistema legado para emitir credenciais verificáveis
+* Um serviço de autenticação baseado na apresentação de provas de credenciais verificáveis
+* Uma carteira corporativa para manter e apresentar credenciais verificáveis sobre essa empresa
+* Uma interface de usuário para uma pessoa usar uma carteira não armazenada em um dispositivo móvel
+* Um aplicativo embutido em um dispositivo IoT, capaz de emitir credenciais verificáveis sobre os dados coletados
+* Uma conexão persistente com outros agentes que permite mensagens e notificações seguras
+* Código personalizado para implementar um novo serviço.
 
 ## Getting Started
 
-For those new to SSI, Aries and ACA-Py, there are a couple of Linux Foundation edX courses that provide a good starting point.
+Para aqueles que são novos no SSI, Aries e ACA-Py, existem alguns cursos Linux Foundation edX que fornecem um bom ponto de partida.
 
-* [Identity in Hyperledger: Indy, Aries and Ursa](https://www.edx.org/course/identity-in-hyperledger-aries-indy-and-ursa)
-* [Becoming a Hyperledger Aries Developer](https://www.edx.org/course/becoming-a-hyperledger-aries-developer)
+* [Identidade no Hyperledger: Indy, Aries e Ursa](https://www.edx.org/course/identity-in-hyperledger-aries-indy-and-ursa)
+* [Tornar-se um desenvolvedor Hyperledger Aries](https://www.edx.org/course/becoming-a-hyperledger-aries-developer)
 
-The latter is the most useful for developers wanting to get a solid basis in using ACA-Py and other Aries Frameworks.
+O último é o mais útil para desenvolvedores que desejam obter uma base sólida no uso de ACA-Py e outros Aries Frameworks.
 
-Also included here is a much more concise (but less maintained) [Getting Started Guide](/docs/GettingStartedAriesDev/README.md) that will take you from knowing next to nothing about decentralized identity to developing Aries-based business apps and services. You’ll run some Indy apps, ACA-Py apps and developer-oriented demos. The guide has a table of contents so you can skip the parts you already know.
+Também está incluído aqui um [Guia de primeiros passos] muito mais conciso (mas menos mantido) (/docs/GettingStartedAriesDev/README.md) que o levará de não saber quase nada sobre identidade descentralizada ao desenvolvimento de aplicativos e serviços de negócios baseados em Aries. Você executará alguns aplicativos Indy, aplicativos ACA-Py e demonstrações voltadas para desenvolvedores. O guia possui um índice para que você possa pular as partes que já conhece.
 
 ### Understanding the Architecture
 
-There is an [architectural deep dive webinar](https://www.youtube.com/watch?v=FXTQEtB4fto&feature=youtu.be) presented by the ACA-Py team, and [slides from the webinar](https://docs.google.com/presentation/d/1K7qiQkVi4n-lpJ3nUZY27OniUEM0c8HAIk4imCWCx5Q/edit#slide=id.g5d43fe05cc_0_77) are also available. The picture below gives a quick overview of the architecture, showing an instance of ACA-Py, a controller and the interfaces between the controller and ACA-Py, and the external paths to other agents and public ledgers on the Internet.
+Há um [webinar de mergulho profundo em arquitetura](https://www.youtube.com/watch?v=FXTQEtB4fto&feature=youtu.be) apresentado pela equipe ACA-Py e [slides do webinar](https:// docs.google.com/presentation/d/1K7qiQkVi4n-lpJ3nUZY27OniUEM0c8HAIk4imCWCx5Q/edit#slide=id.g5d43fe05cc_0_77) também estão disponíveis. A figura abaixo dá uma rápida visão geral da arquitetura, mostrando uma instância do ACA-Py, um controller e as interfaces entre o controller e o ACA-Py, e os caminhos externos para outros agentes e livros públicos na Internet.
 
 ![drawing](./aca-py_architecture.png)
 
 ### Installation and Usage
 
-An ["install and go" page for developers](https://github.com/hyperledger/aries-cloudagent-python/blob/main/DevReadMe.md) is available if you are comfortable with Trust over IP and Aries concepts. ACA-Py can be run with Docker without installation (highly recommended), or can be installed [from PyPi](https://pypi.org/project/aries-cloudagent/). In the [/demo directory](/demo) there is a full set of demos for developers to use in getting started, and the [demo read me](/demo/README.md) is a great starting point for developers to use an "in-browser" approach to run a zero-install example. The [Read the Docs](https://aries-cloud-agent-python.readthedocs.io/en/latest/) overview is also a way to reference the modules and APIs that make up an ACA-Py instance.
+Uma [página "install and go" para desenvolvedores](https://github.com/hyperledger/aries-cloudagent-python/blob/main/DevReadMe.md) está disponível se você se sentir confortável com os conceitos de Trust over IP e Aries. ACA-Py pode ser executado com Docker sem instalação (altamente recomendado) ou pode ser instalado [do PyPi](https://pypi.org/project/aries-cloudagent/). No [diretório/demo](/demo) há um conjunto completo de demos para os desenvolvedores usarem para começar, e o [demo read me](/demo/README.md) é um ótimo ponto de partida para os desenvolvedores usarem uma abordagem "no navegador" para executar um exemplo de instalação zero. A visão geral [Read the Docs](https://aries-cloud-agent-python.readthedocs.io/en/latest/) também é uma maneira de fazer referência aos módulos e APIs que compõem uma instância ACA-Py.
 
 ## About the ACA-Py Admin API
 
-The [overview of ACA-Py’s API](https://github.com/hyperledger/aries-cloudagent-python/blob/main/AdminAPI.md) is a great starting place for learning about the ACA-Py API when you are starting to build your own controller.
+A [visão geral da API do ACA-Py](https://github.com/hyperledger/aries-cloudagent-python/blob/main/AdminAPI.md) é um ótimo ponto de partida para aprender sobre a API do ACA-Py quando você estiver começando a construir seu próprio controlador.
 
-An ACA-Py instance puts together an OpenAPI-documented REST interface based on the protocols that are loaded. This is used by a controller application (written in any language) to manage the behaviour of the agent. The controller can initiate actions (e.g. issuing a credential) and can respond to agent events (e.g. sending a presentation request after a connection is accepted). Agent events are delivered to the controller as webhooks to a configured URL.
+Uma instância ACA-Py reúne uma interface REST documentada pela OpenAPI com base nos protocolos que são carregados. Isso é usado por um aplicativo controlador (escrito em qualquer linguagem) para gerenciar o comportamento do agente. O controlador pode iniciar ações (por exemplo, emitir uma credencial) e pode responder a eventos do agente (por exemplo, enviar uma solicitação de apresentação após uma conexão ser aceita). Os eventos do agente são entregues ao controlador como webhooks para uma URL configurada.
 
-Technical note: the administrative API exposed by the agent for the controller to use must be protected with an API key (using the --admin-api-key command line arg) or deliberately left unsecured using the --admin-insecure-mode command line arg. The latter should not be used other than in development if the API is not otherwise secured.
+Nota técnica: a API administrativa exposta pelo agente para uso do controlador deve ser protegida com uma chave de API (usando o arg da linha de comando --admin-api-key) ou deixada deliberadamente sem segurança usando o comando --admin-insecure-mode linha arg. O último não deve ser usado além do desenvolvimento se a API não estiver protegida de outra forma.
 
 ## Troubleshooting
 
-There are a number of resources for getting help with ACA-Py and troubleshooting
-any problems you might run into. The [Troubleshooting](Troubleshooting.md)
-document contains some guidance about issues that have been experienced in the
-past. Feel free to submit PRs to supplement the troubleshooting document!
-Searching the [ACA-Py GitHub
-issues](https://github.com/hyperledger/aries-cloudagent-python/issues) will
-often uncover challenges that others have experienced, often with answers to
-solving those challenges. As well, there is the "aries-cloudagent-python"
-channel on the Hyperledger Discord chat server ([invitation
-here](https://discord.gg/hyperledger)).
+Existem vários recursos para obter ajuda com ACA-Py e solução de problemas
+quaisquer problemas que você possa encontrar. A [Solução de problemas](Troubleshooting.md)
+documento contém algumas orientações sobre problemas que foram experimentados no
+passado. Sinta-se à vontade para enviar PRs para complementar o documento de solução de problemas!
+Pesquisando o [ACA-Py GitHub
+questões](https://github.com/hyperledger/aries-cloudagent-python/issues) irá
+muitas vezes descobrem desafios que outros experimentaram, muitas vezes com respostas para
+resolver esses desafios. Além disso, existe o "aries-cloudagent-python"
+canal no servidor de chat Hyperledger Discord ([convite
+aqui](https://discord.gg/hyperledger)).
 
 ## Credit
 
-The initial implementation of ACA-Py was developed by the Government of British Columbia’s Digital Trust Team in Canada. To learn more about what’s happening with decentralized identity and digital trust in British Columbia, a new website will be launching and the link will be made available here.
+A implementação inicial do ACA-Py foi desenvolvida pela Equipe de Confiança Digital do Governo da Colúmbia Britânica no Canadá. Para saber mais sobre o que está acontecendo com identidade descentralizada e confiança digital na Colúmbia Britânica, um novo site será lançado e o link será disponibilizado aqui.
 
 ## Contributing
 
-Pull requests are welcome! Please read our [contributions guide](https://github.com/hyperledger/aries-cloudagent-python/blob/main/CONTRIBUTING.md) and submit your PRs. We enforce [developer certificate of origin](https://developercertificate.org/) (DCO) commit signing — [guidance](https://github.com/apps/dco) on this is available. We also welcome issues submitted about problems you encounter in using ACA-Py.
+Pull requests são bem-vindos! Leia nosso [guia de contribuições](https://github.com/hyperledger/aries-cloudagent-python/blob/main/CONTRIBUTING.md) e envie seus PRs. Nós aplicamos [certificado de origem do desenvolvedor](https://developercertificate.org/) (DCO) assinatura de compromisso — [orientação](https://github.com/apps/dco) sobre isso está disponível. Também aceitamos questões enviadas sobre problemas que você encontra ao usar o ACA-Py.
 
 ## License
 
