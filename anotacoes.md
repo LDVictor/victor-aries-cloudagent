@@ -4,6 +4,17 @@ Para instalar os Ledgers no exemplo Alice/Faber, foi necessário instalar o Ubun
 
 Para executar o exemplo, é necessário a seguinte adaptação:
 
+ - Executando VON Network:
+
+$ cd von-network/
+$ ./manage start --logs
+
+ - Instalando extensões necessárias:
+
+$ pip3 install multidict typing_extensions attr yarl async_timeout idna_ssl attrs charset_normalizer aiosignal qrcode asyncpg "prompt-toolkit<3.0.0" pygments aries-askar
+
+$ python3 -m pip install aiohttp
+
  - Executando Faber
 
 $ cd victor-aries-cloudagent/demo/
