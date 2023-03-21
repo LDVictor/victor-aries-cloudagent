@@ -21,5 +21,6 @@ $ cd victor-aries-cloudagent/demo/
 $ LEDGER_URL=http://localhost:9000 DEFAULT_POSTGRES=true python3 -m runners.faber --port 8020
 
  - Executando Alice
+
 $ cd victor-aries-cloudagent/demo/
 $ LEDGER_URL=http://localhost:9000 DEFAULT_POSTGRES=true python3 -m runners.alice --port 8030
