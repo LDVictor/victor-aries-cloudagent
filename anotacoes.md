@@ -7,13 +7,18 @@ Para executar o exemplo, é necessário a seguinte adaptação:
  - Executando VON Network:
 
 $ cd von-network/
+$ ./manage build
 $ ./manage start --logs
 
  - Instalando extensões necessárias:
 
-$ pip3 install multidict typing_extensions attr yarl async_timeout idna_ssl attrs charset_normalizer aiosignal qrcode asyncpg "prompt-toolkit<3.0.0" pygments aries-askar
+$ sudo -H pip3 install --upgrade pip
 
-$ python3 -m pip install aiohttp
+$ pip3 install multidict typing_extensions attr yarl async_timeout idna_ssl attrs charset_normalizer aiosignal qrcode asyncpg "prompt-toolkit<3.0.0" pygments aries-askar==0.2.7 pydid aiohttp-apispec aiohttp_cors PyJWT PyLD nest-asyncio markdown deepmerge indy-vdr indy-credx
+
+$ python3 -m pip install aiohttp configargparse base58
+
+$ pip install runners
 
  - Executando Faber
 
